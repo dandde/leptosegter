@@ -1,14 +1,8 @@
 use std::borrow::Cow;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq, Default)]
 pub struct SegResult<'a> {
     pub sentences: Vec<Sentence<'a>>,
-}
-
-impl<'a> Default for SegResult<'a> {
-    fn default() -> Self {
-        Self { sentences: vec![] }
-    }
 }
 
 impl<'a> SegResult<'a> {

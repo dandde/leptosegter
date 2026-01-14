@@ -7,7 +7,7 @@ pub fn ResultUI(
     data: Signal<SegResult<'static>>,
 ) -> impl IntoView {
     // Predefined palette of background colors (pastel/vibrant)
-    let colors = vec![
+    let colors = [
         "#ffd90079", // LightGold
         "#ffb6c17a", // LightPink
         "#87cefaa9", // LightSkyBlue

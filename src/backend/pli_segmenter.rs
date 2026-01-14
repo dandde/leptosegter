@@ -131,7 +131,7 @@ fn is_list_marker(text: &str) -> bool {
     let first = chars.next();
 
     // Check if starts with digit or open paren
-    let starts_valid = first.map_or(false, |c| c.is_numeric() || c == '(');
+    let starts_valid = first.is_some_and(|c| c.is_numeric() || c == '(');
     if !starts_valid {
         return false;
     }
@@ -216,14 +216,14 @@ fn tokenize_sentence<'a>(
     id_counter: &mut usize,
 ) -> Vec<Token<'a>> {
     let mut tokens = Vec::with_capacity(text.len() / 5);
-    let mut word_iter = text.split_word_bound_indices().peekable();
+    let word_iter = text.split_word_bound_indices().peekable();
     let mut tracker = BalanceTracker::new();
 
     let mut pending_start: Option<usize> = None;
     let mut pending_end = 0;
     let mut pending_kind: Option<TokenKind> = None;
 
-    while let Some((local_offset, word)) = word_iter.next() {
+    for (local_offset, word) in word_iter {
         let is_whitespace = word.trim().is_empty();
 
         let start_merging = tracker.is_merging();
