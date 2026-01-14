@@ -1,10 +1,10 @@
 {
   "build": {
     "env": {
-        "Please": "Deploy"
+      "Please": "Deploy"
     }
   },
-  "buildCommand": "./vercel_build.sh",
+  "buildCommand": "bash vercel_build.sh",
   "outputDirectory": "dist",
   "framework": null
 }
