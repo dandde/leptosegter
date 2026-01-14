@@ -21,19 +21,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
 echo "Installing wasm32-unknown-unknown..."
 rustup target add wasm32-unknown-unknown
 
-# Download Trunk binary
-TRUNK_VERSION="v0.21.5"
+# Install Trunk
+# We use cargo install instead of downloading a binary because Vercel's Amazon Linux 2 environment
+# has an older GLIBC that is incompatible with the standard pre-compiled trunk binaries.
 if ! command -v trunk &> /dev/null; then
-    echo "Trunk not found, downloading $TRUNK_VERSION..."
-    if command -v wget &> /dev/null; then
-        echo "Using wget..."
-        wget -qO- https://github.com/trunk-rs/trunk/releases/download/$TRUNK_VERSION/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf- -C .
-    else
-        echo "Using curl..."
-        curl -L https://github.com/trunk-rs/trunk/releases/download/$TRUNK_VERSION/trunk-x86_64-unknown-linux-gnu.tar.gz | tar -xzf- -C .
-    fi
-    chmod +x trunk
-    export PATH=$PATH:$(pwd)
+    echo "Trunk not found. Installing via cargo (this may take a few minutes)..."
+    cargo install trunk
 else
     echo "Trunk already installed."
 fi
